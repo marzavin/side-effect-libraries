@@ -3,19 +3,20 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latestmajor</LangVersion>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<LangVersion>latestmajor</LangVersion>
+		<Description>A general-purpose library for manipulating files in various formats.</Description>
 		<Authors>Artsiom Marzavin</Authors>
 		<Title>SideEffect.Files</Title>
-		<Description>SideEffect.Files library</Description>
-		<RepositoryUrl>https://github.com/marzavin/sport-statistics-api</RepositoryUrl>
+		<RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+		<None Include="LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)" />
+		<None Include="README.md" Pack="true" PackagePath="$(PackageReadmeFile)" />
 	</ItemGroup>
 
 </Project>
