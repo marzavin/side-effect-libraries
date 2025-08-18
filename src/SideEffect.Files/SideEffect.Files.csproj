@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<LangVersion>latestmajor</LangVersion>
+		<Description>A general-purpose library for manipulating files in various formats.</Description>
+		<Authors>Artsiom Marzavin</Authors>
+		<Title>SideEffect.Files</Title>
+		<RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)" />
+		<None Include="README.md" Pack="true" PackagePath="$(PackageReadmeFile)" />
+	</ItemGroup>
+
+</Project>
