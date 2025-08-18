@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideEffect.Files", "src\SideEffect.Files\SideEffect.Files.csproj", "{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3490925-5024-41F3-901A-A504D0D1CDBF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>latestmajor</LangVersion>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Authors>Artsiom Marzavin</Authors>
+		<Title>SideEffect.Files</Title>
+		<Description>SideEffect.Files library</Description>
+		<RepositoryUrl>https://github.com/marzavin/sport-statistics-api</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+	</ItemGroup>
+
+</Project>
