@@ -5,9 +5,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<LangVersion>latestmajor</LangVersion>
-		<Description>A general-purpose library for manipulating files in various formats.</Description>
+		<Description>A general-purpose library for message exchange.</Description>
 		<Authors>Artsiom Marzavin</Authors>
-		<Title>SideEffect.Files</Title>
+		<Title>SideEffect.Messaging</Title>
 		<RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -19,6 +19,10 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="StackExchange.Redis" Version="2.9.25" />
 	</ItemGroup>
 
 </Project>
