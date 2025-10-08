@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="XML\TCX\Data\ride-0-2025-07-26-08-18-41.tcx" />
+	  <None Remove="XML\TCX\Data\TrainingCenterDatabasev2.xsd" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="XML\TCX\Data\ride-0-2025-07-26-08-18-41.tcx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="XML\TCX\Data\TrainingCenterDatabasev2.xsd">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="NUnit" Version="4.4.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\SideEffect.Files\SideEffect.Files.csproj" />
+	</ItemGroup>
+
+</Project>
