@@ -5,13 +5,14 @@ namespace SideEffect.Messaging.Redis;
 
 internal class RedisStorage
 {
-    private readonly string _connectionString;
     private readonly ConnectionMultiplexer _connection;
 
-    public RedisStorage(string connectionString)
+    public RedisStorage(RedisStorageConfiguration configuration)
     {
-        _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
-        _connection = ConnectionMultiplexer.Connect(_connectionString);
+        var options = ConfigurationOptions.Parse(configuration.ConnectionString);
+        options.Password = configuration.Password;
+
+        _connection = ConnectionMultiplexer.Connect(options);
     }
 
     public async Task PublishAsync<TMessage>(TMessage message, string channelName = null, CancellationToken cancellationToken = default)
