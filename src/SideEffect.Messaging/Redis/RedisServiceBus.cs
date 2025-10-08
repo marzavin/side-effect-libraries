@@ -10,10 +10,10 @@ public class RedisServiceBus : IServiceBus
     /// <summary>
     /// Creates new instance of Redis service bus implementation.
     /// </summary>
-    /// <param name="connectionString">Redis connection string.</param>
-    public RedisServiceBus(string connectionString)
+    /// <param name="configuration">Redis connection settings.</param>
+    public RedisServiceBus(RedisStorageConfiguration configuration)
     {
-        _redisStorage = new RedisStorage(connectionString);
+        _redisStorage = new RedisStorage(configuration);
     }
 
     /// <inheritdoc/>
