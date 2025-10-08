@@ -1,1 +1,1 @@
-# SideEffect.Files Common Library
+# SideEffect.Files Library

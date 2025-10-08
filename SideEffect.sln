@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36408.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideEffect.Files", "src\SideEffect.Files\SideEffect.Files.csproj", "{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideEffect.Messaging", "src\SideEffect.Messaging\SideEffect.Messaging.csproj", "{1ACAB5E7-784D-428A-AB74-DD1B42FA21C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BE9EEEC-CF7B-5AB5-F58D-E6C836F2D96E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ACAB5E7-784D-428A-AB74-DD1B42FA21C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ACAB5E7-784D-428A-AB74-DD1B42FA21C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ACAB5E7-784D-428A-AB74-DD1B42FA21C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ACAB5E7-784D-428A-AB74-DD1B42FA21C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
