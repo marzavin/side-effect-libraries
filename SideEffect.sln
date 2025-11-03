@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideEffect.Extensions.Tests", "tests\SideEffect.Extensions.Tests\SideEffect.Extensions.Tests.csproj", "{9344C5C2-10E8-4FF6-A223-2B09496DD8D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideEffect.DataTransfer", "src\SideEffect.DataTransfer\SideEffect.DataTransfer.csproj", "{FC50FA25-9CFB-535D-417A-C98E5A6866DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{9344C5C2-10E8-4FF6-A223-2B09496DD8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9344C5C2-10E8-4FF6-A223-2B09496DD8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9344C5C2-10E8-4FF6-A223-2B09496DD8D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC50FA25-9CFB-535D-417A-C98E5A6866DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC50FA25-9CFB-535D-417A-C98E5A6866DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC50FA25-9CFB-535D-417A-C98E5A6866DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC50FA25-9CFB-535D-417A-C98E5A6866DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
