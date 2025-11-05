@@ -15,7 +15,7 @@ internal class RedisStorage
         _connection = ConnectionMultiplexer.Connect(options);
     }
 
-    public async Task PublishAsync<TMessage>(TMessage message, string channelName = null, CancellationToken cancellationToken = default)
+    public async Task PublishEventAsync<TMessage>(TMessage message, string channelName = null, CancellationToken cancellationToken = default)
         where TMessage : IMessage
     {
         var channel = GetChannel<TMessage>(channelName);
@@ -25,11 +25,24 @@ internal class RedisStorage
         await subscriber.PublishAsync(channel, value);
     }
 
-    public async Task SubscribeAsync<TMessage>(Action<TMessage> handler, string channelName = null, CancellationToken cancellationToken = default)
+    public async Task SubscribeToEventAsync<TMessage>(Func<TMessage, CancellationToken, Task> handler, string channelName = null, CancellationToken cancellationToken = default)
         where TMessage : IMessage
     {
         var channel = GetChannel<TMessage>(channelName);
-        
+
+        var subscriber = _connection.GetSubscriber();
+        await subscriber.SubscribeAsync(channel, (channel, value) => Task.Run(() =>
+        {
+            var message = JsonSerializer.Deserialize<TMessage>(value);
+            return handler.Invoke(message, cancellationToken);
+        }));
+    }
+
+    public async Task SubscribeToEventAsync<TMessage>(Action<TMessage> handler, string channelName = null, CancellationToken cancellationToken = default)
+        where TMessage : IMessage
+    {
+        var channel = GetChannel<TMessage>(channelName);
+
         var subscriber = _connection.GetSubscriber();
         await subscriber.SubscribeAsync(channel, (channel, value) =>
         {
