@@ -15,6 +15,15 @@ internal class RedisStorage
         _connection = ConnectionMultiplexer.Connect(options);
     }
 
+    public async Task UnsubscribeFromEventAsync<TMessage>(string channelName = null, CancellationToken cancellationToken = default)
+        where TMessage : IMessage
+    {
+        var channel = GetChannel<TMessage>(channelName);
+
+        var subscriber = _connection.GetSubscriber();
+        await subscriber.UnsubscribeAsync(channel);
+    }
+
     public async Task PublishEventAsync<TMessage>(TMessage message, string channelName = null, CancellationToken cancellationToken = default)
         where TMessage : IMessage
     {

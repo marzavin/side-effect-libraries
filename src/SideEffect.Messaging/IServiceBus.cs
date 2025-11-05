@@ -28,7 +28,8 @@ public interface IServiceBus
     /// </summary>
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>See <see cref="Task"/> for more information.</returns>
-    Task UnsubscribeAsync(CancellationToken cancellationToken = default);
+    Task UnsubscribeFromEventAsync<TMessage>(CancellationToken cancellationToken = default)
+        where TMessage : IMessage;
 
     /// <summary>
     /// Publishes new message to channel.
