@@ -17,17 +17,23 @@ public class RedisServiceBus : IServiceBus
     }
 
     /// <inheritdoc/>
-    public async Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
+    public async Task PublishEventAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
         where TMessage : IMessage
     {
-        await _redisStorage.PublishAsync(message, cancellationToken: cancellationToken);
+        await _redisStorage.PublishEventAsync(message, cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task SubscribeAsync<TMessage>(Action<TMessage> handler, CancellationToken cancellationToken = default)
+    public async Task SubscribeToEventAsync<TMessage>(Action<TMessage> handler, CancellationToken cancellationToken = default)
         where TMessage : IMessage
     {
-        await _redisStorage.SubscribeAsync(handler, cancellationToken: cancellationToken);
+        await _redisStorage.SubscribeToEventAsync(handler, cancellationToken: cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task SubscribeToEventAsync<TMessage>(Func<TMessage, CancellationToken, Task> handler, CancellationToken cancellationToken = default) where TMessage : IMessage
+    {
+        await _redisStorage.SubscribeToEventAsync(handler, cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
