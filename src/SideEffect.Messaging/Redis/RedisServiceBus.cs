@@ -31,14 +31,16 @@ public class RedisServiceBus : IServiceBus
     }
 
     /// <inheritdoc/>
-    public async Task SubscribeToEventAsync<TMessage>(Func<TMessage, CancellationToken, Task> handler, CancellationToken cancellationToken = default) where TMessage : IMessage
+    public async Task SubscribeToEventAsync<TMessage>(Func<TMessage, CancellationToken, Task> handler, CancellationToken cancellationToken = default)
+        where TMessage : IMessage
     {
         await _redisStorage.SubscribeToEventAsync(handler, cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
-    public Task UnsubscribeAsync(CancellationToken cancellationToken = default)
+    public async Task UnsubscribeFromEventAsync<TMessage>(CancellationToken cancellationToken = default)
+        where TMessage : IMessage
     {
-        throw new NotImplementedException();
+        await _redisStorage.UnsubscribeFromEventAsync<TMessage>(cancellationToken: cancellationToken);
     }
 }
