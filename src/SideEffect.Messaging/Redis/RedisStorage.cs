@@ -42,7 +42,7 @@ internal class RedisStorage
         var subscriber = _connection.GetSubscriber();
         await subscriber.SubscribeAsync(channel, (channel, value) => Task.Run(() =>
         {
-            var message = JsonSerializer.Deserialize<TMessage>(value);
+            var message = JsonSerializer.Deserialize<TMessage>(value.ToString());
             return handler.Invoke(message, cancellationToken);
         }));
     }
@@ -55,7 +55,7 @@ internal class RedisStorage
         var subscriber = _connection.GetSubscriber();
         await subscriber.SubscribeAsync(channel, (channel, value) =>
         {
-            var message = JsonSerializer.Deserialize<TMessage>(value);
+            var message = JsonSerializer.Deserialize<TMessage>(value.ToString());
             handler.Invoke(message);
         });
     }
