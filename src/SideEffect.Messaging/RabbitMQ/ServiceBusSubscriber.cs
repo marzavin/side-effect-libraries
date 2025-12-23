@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SideEffect.Messaging.Handlers;
@@ -42,7 +41,7 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
     {
         if (_consumer is not null)
         {
-            await UnsubscribeAsync<TEvent>(cancellationToken);
+            await UnsubscribeFromEventAsync<TEvent>(cancellationToken);
         }
 
         var connection = await GetConnectionAsync(cancellationToken);
@@ -56,6 +55,8 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
 
         _messageHandler = async (object sender, BasicDeliverEventArgs ea) =>
         {
+            Logger?.LogInformation("Event of type '{eventName}' has been received.", typeof(TEvent).Name);
+
             using var scope = _serviceProvider.CreateScope();
             var handlers = scope.ServiceProvider.GetServices<EventHandlerBase<TEvent>>()?.ToList();
 
@@ -65,18 +66,22 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
                 var tasks = handlers.Select(x => x.HandleAsync(message, cancellationToken));
                 await Task.WhenAll(tasks);
             }
+
+            Logger?.LogInformation("Event of type '{eventName}' has been handled.", typeof(TEvent).Name);
         };
 
         _consumer = new AsyncEventingBasicConsumer(_channel);
         _consumer.ReceivedAsync += _messageHandler;
 
         await _channel.BasicConsumeAsync(channelName, true, _consumer, cancellationToken: cancellationToken);
+
+        Logger?.LogInformation("Subscription to '{eventName}' event has been added.", typeof(TEvent).Name);
     }
 
     /// <inheritdoc/>
-    public async Task UnsubscribeAsync<TEvent>(CancellationToken cancellationToken = default)
+    public async Task UnsubscribeFromEventAsync<TEvent>(CancellationToken cancellationToken = default)
         where TEvent : EventMessage
-    {
+    {       
         if (_consumer is null)
         {
             return;
@@ -86,6 +91,8 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
         _consumer = null;
 
         await DisconnectAsync(cancellationToken);
+
+        Logger?.LogInformation("Subscription to '{eventName}' event has been removed.", typeof(TEvent).Name);
     }
 
     private async Task DisconnectAsync(CancellationToken cancellationToken = default)

@@ -38,6 +38,8 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
         var subscriber = connection.GetSubscriber();
         await subscriber.SubscribeAsync(channel, async (channel, value) =>
         {
+            Logger?.LogInformation("Event of type '{eventName}' has been received.", typeof(TEvent).Name);
+
             using var scope = _serviceProvider.CreateScope();
             var handlers = scope.ServiceProvider.GetServices<EventHandlerBase<TEvent>>()?.ToList();
 
@@ -47,11 +49,15 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
                 var tasks = handlers.Select(x => x.HandleAsync(message, cancellationToken));
                 await Task.WhenAll(tasks);
             }
+
+            Logger?.LogInformation("Event of type '{eventName}' has been handled.", typeof(TEvent).Name);
         });
+
+        Logger?.LogInformation("Subscription to '{eventName}' event has been added.", typeof(TEvent).Name);
     }
 
     /// <inheritdoc/>
-    public async Task UnsubscribeAsync<TEvent>(CancellationToken cancellationToken = default)
+    public async Task UnsubscribeFromEventAsync<TEvent>(CancellationToken cancellationToken = default)
         where TEvent : EventMessage
     {
         var channel = await GetChannelAsync<TEvent>(cancellationToken);
@@ -60,5 +66,7 @@ public class ServiceBusSubscriber : ServiceBusClientBase, IServiceBusSubscriber
 
         var subscriber = connection.GetSubscriber();
         await subscriber.UnsubscribeAsync(channel);
+
+        Logger?.LogInformation("Subscription to '{eventName}' event has been removed.", typeof(TEvent).Name);
     }
 }
