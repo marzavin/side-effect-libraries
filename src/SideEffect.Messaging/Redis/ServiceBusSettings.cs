@@ -1,9 +1,9 @@
 ﻿namespace SideEffect.Messaging.Redis;
 
 /// <summary>
-/// Configuration of Redis storage.
+/// Configuration of Redis service bus.
 /// </summary>
-public class RedisStorageConfiguration
+public class ServiceBusSettings
 {
     /// <summary>
     /// Gets or sets connection string.
