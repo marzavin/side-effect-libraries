@@ -94,9 +94,6 @@ public abstract class ServiceBusClientBase
 
     private ConfigurationOptions ConfigureConnection()
     {
-        var options = ConfigurationOptions.Parse(_settings.ConnectionString);
-        options.Password = _settings.Password;
-
-        return options;
+        return ConfigurationOptions.Parse(_settings.ConnectionString);
     }
 }

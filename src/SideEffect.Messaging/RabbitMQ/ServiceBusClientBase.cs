@@ -68,28 +68,6 @@ public abstract class ServiceBusClientBase
 
     private ConnectionFactory ConfigureConnection()
     {
-        if (string.IsNullOrWhiteSpace(_settings.Host))
-        {
-            throw new ArgumentException("Not enough information to create a connection.", nameof(_settings.Host));
-        }
-
-        var factory = new ConnectionFactory
-        {
-            HostName = _settings.Host,
-            Port = _settings.Port ?? AmqpTcpEndpoint.UseDefaultPort
-        };
-
-        if (!string.IsNullOrWhiteSpace(_settings.VirtualHost))
-        {
-            factory.VirtualHost = _settings.VirtualHost;
-        }
-
-        if (!string.IsNullOrWhiteSpace(_settings.User) && !string.IsNullOrWhiteSpace(_settings.Password))
-        {
-            factory.UserName = _settings.User;
-            factory.Password = _settings.Password;
-        }
-
-        return factory;
+        return new ConnectionFactory { Uri = new Uri(_settings.ConnectionString) };
     }
 }
