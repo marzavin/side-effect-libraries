@@ -1,0 +1,62 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+# JSON files
+[*.json]
+indent_style = space
+indent_size = 2
+
+# XML files
+[*.xml]
+indent_style = space
+indent_size = 2
+
+# C# source files
+[*.cs]
+indent_style = space
+indent_size = 4
+
+# C# new line preferences
+dotnet_new_line_before_open_brace = all:warning
+csharp_new_line_before_else = true:warning
+csharp_new_line_before_catch = true:warning
+csharp_new_line_before_finally = true:warning
+
+# C# wrapping preferences
+csharp_preserve_single_line_statements = true 
+csharp_preserve_single_line_blocks = true
+
+# C# var usage preferences
+csharp_style_var_for_built_in_types = true:warning
+csharp_style_var_when_type_is_apparent = true:warning
+csharp_style_var_elsewhere = true:warning
+
+# C# this. qualification preferences
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+
+# C# readonly field preferences
+dotnet_style_readonly_field = true:warning
+
+# C# accessibility modifiers preferences
+dotnet_style_require_accessibility_modifiers = always:warning
+
+# C# using directives preferences
+csharp_using_directive_placement = outside_namespace:warning
+dotnet_sort_system_directives_first = false:warning
+dotnet_separate_import_directive_groups = true:warning
+
+# C# member ordering preferences
+dotnet_sort_system_directives_first = false:warning
+csharp_member_ordering = [fields, properties, constructors, methods]:warning
+
+# C# namespace preferences
+csharp_style_namespace_declarations = file_scoped:warning
