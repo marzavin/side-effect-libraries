@@ -1,6 +1,9 @@
+# Top-most EditorConfig file
+# This file is applied to the entire solution and all subfolders
 root = true
 
 [*]
+#Basic settings for all files
 indent_style = space
 indent_size = 4
 end_of_line = lf
@@ -8,55 +11,86 @@ insert_final_newline = true
 charset = utf-8
 
 # JSON files
+# Use 2 spaces for JSON formatting (common standard)
 [*.json]
 indent_style = space
 indent_size = 2
 
 # XML files
+# Use 2 spaces for XML formatting (common standard)
 [*.xml]
 indent_style = space
 indent_size = 2
 
 # C# source files
+# C# formatting rules
 [*.cs]
 indent_style = space
 indent_size = 4
 
 # C# new line preferences
+# Use Allman style: braces on a new line (applies to methods, properties, loops, etc.)
 dotnet_new_line_before_open_brace = all:warning
+# Place else/catch/finally on a new line
 csharp_new_line_before_else = true:warning
 csharp_new_line_before_catch = true:warning
 csharp_new_line_before_finally = true:warning
 
 # C# wrapping preferences
+# Preserve single-line statements/blocks when already formatted that way
 csharp_preserve_single_line_statements = true 
 csharp_preserve_single_line_blocks = true
 
 # C# var usage preferences
+# Prefer var everywhere it is allowed
 csharp_style_var_for_built_in_types = true:warning
 csharp_style_var_when_type_is_apparent = true:warning
 csharp_style_var_elsewhere = true:warning
 
 # C# this. qualification preferences
+# Use 'this.' only when required (e.g., name conflicts)
 dotnet_style_qualification_for_field = false:warning
 dotnet_style_qualification_for_property = false:warning
 dotnet_style_qualification_for_method = false:warning
 dotnet_style_qualification_for_event = false:warning
 
 # C# readonly field preferences
+#Enforce readonly for fields that are only assigned in constructor (helps guarantee immutability where possible)
 dotnet_style_readonly_field = true:warning
 
 # C# accessibility modifiers preferences
+# Require explicit accessibility modifiers everywhere (including private)
 dotnet_style_require_accessibility_modifiers = always:warning
 
 # C# using directives preferences
+# Place usings outside namespaces
 csharp_using_directive_placement = outside_namespace:warning
+# Do not force System directives first (we sort alphabetically)
 dotnet_sort_system_directives_first = false:warning
-dotnet_separate_import_directive_groups = true:warning
+# Do not split using directives into groups (all in one list)
+dotnet_separate_import_directive_groups = false:warning
 
 # C# member ordering preferences
-dotnet_sort_system_directives_first = false:warning
+# Enforce member order: fields → properties → constructors → methods
 csharp_member_ordering = [fields, properties, constructors, methods]:warning
 
 # C# namespace preferences
+# Prefer file-scoped namespaces (C# 10+)
 csharp_style_namespace_declarations = file_scoped:warning
+
+# C# null check preferences
+#Prefer 'is null' / 'is not null' for null comparisons
+csharp_style_pattern_matching_over_is_with_null_check = true:warning
+csharp_style_prefer_is_null_check_over_reference_equality_method = true:warning
+
+# C# async method preferences
+# Warn when an async method lacks await (prevents unnecessary state machines)
+dotnet_diagnostic.CS1998.severity = warning
+
+# C# using declaration preferences
+# Prefer using declarations (C# 8+) for IDisposable resources
+csharp_style_prefer_using_statement = false:warning
+
+# C# const vs readonly preferences
+# Prefer const when the value is known at compile time
+dotnet_style_prefer_const_literals = true:warning

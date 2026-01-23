@@ -1,9 +1,9 @@
-﻿namespace SideEffect.Messaging.Redis;
+﻿namespace SideEffect.Messaging.RabbitMQ;
 
 /// <summary>
-/// Configuration of Redis service bus.
+/// Messaging hub settings.
 /// </summary>
-public class ServiceBusSettings
+public class MessagingSettings
 {
     /// <summary>
     /// Gets or sets connection string.

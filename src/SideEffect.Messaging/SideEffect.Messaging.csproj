@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<LangVersion>latestmajor</LangVersion>
-		<Description>A general-purpose library for message exchange.</Description>
+		<Description>A general-purpose library for messaging.</Description>
 		<Authors>Artsiom Marzavin</Authors>
 		<Title>SideEffect.Messaging</Title>
 		<RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
@@ -31,8 +31,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Include="RabbitMQ.Client" Version="7.2.0" />
-		<PackageReference Include="StackExchange.Redis" Version="2.10.1" />
 	</ItemGroup>
 
 </Project>

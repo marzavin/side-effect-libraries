@@ -14,7 +14,7 @@ public class JsonObjectSerializer : IObjectSerializer
     public async Task<TObject> DeserializeObjectFromBytesAsync<TObject>(byte[] data, CancellationToken cancellationToken = default)
     {
         var jsonString = Encoding.UTF8.GetString(data);
-        return await DeserializeObjectFromStringAsync<TObject>(jsonString);
+        return await DeserializeObjectFromStringAsync<TObject>(jsonString, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -27,7 +27,7 @@ public class JsonObjectSerializer : IObjectSerializer
     /// <inheritdoc/>
     public async Task<byte[]> SerializeObjectToBytesAsync<TObject>(TObject data, CancellationToken cancellationToken = default)
     {
-        var jsonString = await SerializeObjectToStringAsync(data);
+        var jsonString = await SerializeObjectToStringAsync(data, cancellationToken);
         return Encoding.UTF8.GetBytes(jsonString);
     }
 
