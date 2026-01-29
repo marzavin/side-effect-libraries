@@ -1,9 +1,9 @@
-﻿namespace SideEffect.Messaging.RabbitMQ;
+namespace SideEffect.Messaging.RabbitMQ;
 
 /// <summary>
-/// Messaging hub settings.
+/// Message hub settings.
 /// </summary>
-public class MessagingSettings
+public class MessageHubSettings
 {
     /// <summary>
     /// Gets or sets connection string.

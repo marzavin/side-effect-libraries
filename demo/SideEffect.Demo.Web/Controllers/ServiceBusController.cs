@@ -1,25 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
 using SideEffect.Demo.Common;
-using SideEffect.Messaging.PubSub;
-using RabbitMQProducer= SideEffect.Messaging.RabbitMQ.PubSub.Producer;
+using SideEffect.Messaging;
 
 namespace SideEffect.Demo.Web.Controllers;
 
 [ApiController]
-[Route("servicebus")]
+[Route("servicebus/rabbim-mq")]
 public class ServiceBusController : ControllerBase
 {
-    private RabbitMQProducer RabbitMQProducer { get; }
+    private IMessageHubClient RabbitClient { get; }
 
-    public ServiceBusController(RabbitMQProducer rabbitMQProducer)
+    private ILogger Logger { get; }
+
+    public ServiceBusController(IMessageHubClient rabbitClient, ILogger<ServiceBusController> logger)
     {
-        RabbitMQProducer = rabbitMQProducer ?? throw new ArgumentNullException(nameof(rabbitMQProducer));
+        RabbitClient = rabbitClient ?? throw new ArgumentNullException(nameof(rabbitClient));
+        Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    [HttpGet("pub-sub/rabbit-mq")]
+    [HttpGet("pub-sub")]
     public async Task<IActionResult> PubSubThroughRabbitMQAsync(CancellationToken cancellationToken = default)
     {
-        await RabbitMQProducer.PublishEventAsync(new Event<MessageModel>(new() { Text = "Pub/Sub through RabbitMQ" }), cancellationToken);
+        await RabbitClient.PublishEventAsync(new SendMessageEvent { Message = "Pub/Sub through RabbitMQ" }, cancellationToken);
+        return Ok();
+    }
+
+    [HttpGet("rpc")]
+    public async Task<IActionResult> RPCThroughRabbitMQAsync(CancellationToken cancellationToken = default)
+    {
+        var request = new SendMessageRequest { Message = "RPC through RabbitMQ" };
+        var response = await RabbitClient.ExecuteRequestAsync<SendMessageRequest, SendMessageResponse>(request, cancellationToken);
+
+        Logger.LogInformation("Response {responseType} from RPC service via RabbitMQ: {message}.", response.GetType().FullName, response.Message);
+
         return Ok();
     }
 }

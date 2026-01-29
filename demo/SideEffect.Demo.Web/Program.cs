@@ -1,15 +1,13 @@
-using RabbitMQPubSubProducer = SideEffect.Messaging.RabbitMQ.PubSub.Producer;
-using RabbitMQRPCProducer = SideEffect.Messaging.RabbitMQ.RPC.Producer;
+using SideEffect.Messaging.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
 var rabbitConnection = builder.Configuration.GetConnectionString("rabbitmq");
+var settings = new MessageHubSettings { ConnectionString = rabbitConnection };
 
-builder.Services.AddSingleton(new SideEffect.Messaging.RabbitMQ.MessagingSettings { ConnectionString = rabbitConnection });
-builder.Services.AddScoped<RabbitMQPubSubProducer>();
-builder.Services.AddScoped<RabbitMQRPCProducer>();
+builder.Services.AddRabbitMQMessageHub(settings);
 
 builder.Services.AddControllers();
 
