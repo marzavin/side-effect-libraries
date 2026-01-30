@@ -61,12 +61,16 @@ internal class RequestHandlerService<TRequest, TResponse, THandler> : IHostedSer
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await SubscribeAsync(cancellationToken);
+
+        Logger?.LogInformation("RPC handler '{handlerType}' has been added.", typeof(THandler).Name);
     }
 
     /// <inheritdoc/>
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         await UnsubscribeAsync(cancellationToken);
+
+        Logger?.LogInformation("RPC handler '{handlerType}' has been removed.", typeof(THandler).Name);
     }
 
     #endregion
@@ -120,7 +124,7 @@ internal class RequestHandlerService<TRequest, TResponse, THandler> : IHostedSer
 
             Logger?.LogInformation("Request of type '{messageType}' with correlation id='{correlationId}' has been received.", typeof(TRequest).Name, props.CorrelationId);
 
-            var reply = new TResponse();
+            var response = new TResponse();
 
             try
             {
@@ -128,16 +132,16 @@ internal class RequestHandlerService<TRequest, TResponse, THandler> : IHostedSer
                 var handler = scope.ServiceProvider.GetRequiredService<THandler>();
 
                 var message = await Serializer.DeserializeObjectFromBytesAsync<TRequest>(ea.Body.ToArray());
-                reply = await handler.HandleAsync(message, cancellationToken);
+                response = await handler.HandleAsync(message, cancellationToken);
             }
             catch (Exception ex)
             {
                 Logger?.LogError(ex, "An error occured in service bus message handler '{handlerType}'.", GetType().Name);
-                reply.Errors = [new() { Message = ex.Message }];
+                response.Errors = [new() { Message = ex.Message }];
             }
             finally
             {
-                var messageBody = await Serializer.SerializeObjectToBytesAsync(reply);
+                var messageBody = await Serializer.SerializeObjectToBytesAsync(response);
 
                 await channel.BasicPublishAsync(
                     exchange: RemoteProcedureCallExchange,
@@ -151,7 +155,7 @@ internal class RequestHandlerService<TRequest, TResponse, THandler> : IHostedSer
                     deliveryTag: ea.DeliveryTag,
                     multiple: false);
 
-                Logger?.LogInformation("Reply of type '{messageType}' with correlation id='{correlationId}' has been sent.", typeof(TResponse).Name, props.CorrelationId);
+                Logger?.LogInformation("Response of type '{messageType}' with correlation id='{correlationId}' has been sent.", typeof(TResponse).Name, props.CorrelationId);
             }
         };
 

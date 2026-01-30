@@ -58,12 +58,16 @@ internal class EventHandlerService<TEvent, THandler> : IHostedService, IAsyncDis
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await SubscribeAsync(cancellationToken);
+
+        Logger?.LogInformation("Publish/Subscribe handler '{handlerType}' has been added.", typeof(THandler).Name);
     }
 
     /// <inheritdoc/>
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         await UnsubscribeAsync(cancellationToken);
+
+        Logger?.LogInformation("Publish/Subscribe handler '{handlerType}' has been removed.", typeof(THandler).Name);
     }
 
     #endregion

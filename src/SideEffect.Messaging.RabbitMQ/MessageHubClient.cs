@@ -11,6 +11,8 @@ namespace SideEffect.Messaging.RabbitMQ;
 /// <inheritdoc/>
 internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
 {
+    public const string RemoteProcedureCallExchange = "RPC";
+
     /// <summary>
     /// Gets message hub settings.
     /// </summary>
@@ -56,10 +58,8 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
 
         ConcurrentDictionary<string, TaskCompletionSource<TResponse>> _callbackMapper = new();
 
-        var exchangeName = typeof(TRequest).Name;
-
         await channel.ExchangeDeclareAsync(
-            exchange: exchangeName,
+            exchange: RemoteProcedureCallExchange,
             type: ExchangeType.Direct,
             autoDelete: false,
             cancellationToken: cancellationToken);
@@ -69,7 +69,7 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
 
         await channel.QueueBindAsync(
             queue: replyQueueName,
-            exchange: exchangeName,
+            exchange: RemoteProcedureCallExchange,
             routingKey: replyQueueName,
             cancellationToken: cancellationToken);
 
@@ -101,9 +101,10 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
 
         var messageBody = await Serializer.SerializeObjectToBytesAsync(message);
 
-        var routingKey = typeof(TResponse).Name;
+        var routingKey = typeof(TRequest).Name;
+
         await channel.BasicPublishAsync(
-            exchange: exchangeName,
+            exchange: RemoteProcedureCallExchange,
             routingKey: routingKey,
             mandatory: true,
             basicProperties: messageProps,
@@ -180,8 +181,12 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
         Connection = null;
     }
 
-    public ValueTask DisposeAsync()
+    #region IAsyncDisposable implementation
+
+    public async ValueTask DisposeAsync()
     {
-        throw new NotImplementedException();
+        await CloseConnectionAsync(CancellationToken.None);
     }
+
+    #endregion
 }
