@@ -8,10 +8,12 @@ using System.Collections.Concurrent;
 
 namespace SideEffect.Messaging.RabbitMQ;
 
-/// <inheritdoc/>
+/// <summary>
+/// A client for sending messages to the messaging hub.
+/// </summary>
 internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
 {
-    public const string RemoteProcedureCallExchange = "RPC";
+    private const string RemoteProcedureCallExchange = "RPC";
 
     /// <summary>
     /// Gets message hub settings.
@@ -46,6 +48,8 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
         Serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
+
+    #region IMessageHubClient implementation
 
     /// <inheritdoc/>
     public async Task<TResponse> ExecuteRequestAsync<TRequest, TResponse>(TRequest message, CancellationToken cancellationToken = default)
@@ -149,6 +153,18 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
         Logger?.LogInformation("Event of type '{messageType}' has been published.", typeof(TEvent).Name);
     }
 
+    #endregion
+
+    #region IAsyncDisposable implementation
+
+    /// <inheritdoc/>
+    public async ValueTask DisposeAsync()
+    {
+        await CloseConnectionAsync(CancellationToken.None);
+    }
+
+    #endregion
+
     /// <summary>
     /// Establishes connection with message hub.
     /// </summary>
@@ -180,13 +196,4 @@ internal class MessageHubClient : IMessageHubClient, IAsyncDisposable
         await Connection.CloseAsync(cancellationToken);
         Connection = null;
     }
-
-    #region IAsyncDisposable implementation
-
-    public async ValueTask DisposeAsync()
-    {
-        await CloseConnectionAsync(CancellationToken.None);
-    }
-
-    #endregion
 }

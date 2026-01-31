@@ -1,7 +1,7 @@
 namespace SideEffect.Messaging.RPC;
 
 /// <summary>
-/// Base interface for request messages.
+/// A base interface for all request messages.
 /// </summary>
 public interface IRequest<TResponse> : IMessage
     where TResponse : IResponse;

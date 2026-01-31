@@ -1,6 +1,6 @@
 namespace SideEffect.Messaging.PubSub;
 
 /// <summary>
-/// Base interface for event messages.
+/// A base interface for all event messages.
 /// </summary>
 public interface IEvent : IMessage;

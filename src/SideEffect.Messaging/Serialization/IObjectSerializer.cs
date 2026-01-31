@@ -1,7 +1,7 @@
-﻿namespace SideEffect.Messaging.Serialization;
+namespace SideEffect.Messaging.Serialization;
 
 /// <summary>
-/// Base interface for object serializer.
+/// A base interface for object serializer.
 /// </summary>
 public interface IObjectSerializer
 {
@@ -12,7 +12,7 @@ public interface IObjectSerializer
     /// <param name="data">Content to serialize.</param>
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>Returns serialized data (byte array).</returns>
-    Task<byte[]> SerializeObjectToBytesAsync<TObject>(TObject data, CancellationToken cancellationToken = default);
+    public Task<byte[]> SerializeObjectToBytesAsync<TObject>(TObject data, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Serializes object to string.
@@ -21,7 +21,7 @@ public interface IObjectSerializer
     /// <param name="data">Content to serialize.</param>
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>Returns serialized data (string).</returns>
-    Task<string> SerializeObjectToStringAsync<TObject>(TObject data, CancellationToken cancellationToken = default);
+    public Task<string> SerializeObjectToStringAsync<TObject>(TObject data, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deserializes object from byte array.
@@ -30,7 +30,7 @@ public interface IObjectSerializer
     /// <param name="data">Content to deserialize.</param>
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>Returns deserialized data.</returns>
-    Task<TObject> DeserializeObjectFromBytesAsync<TObject>(byte[] data, CancellationToken cancellationToken = default);
+    public Task<TObject> DeserializeObjectFromBytesAsync<TObject>(byte[] data, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deserializes object from string.
@@ -39,5 +39,5 @@ public interface IObjectSerializer
     /// <param name="data">Content to deserialize.</param>
     /// <param name="cancellationToken">See <see cref="CancellationToken"/> for more information.</param>
     /// <returns>Returns deserialized data.</returns>
-    Task<TObject> DeserializeObjectFromStringAsync<TObject>(string data, CancellationToken cancellationToken = default);
+    public Task<TObject> DeserializeObjectFromStringAsync<TObject>(string data, CancellationToken cancellationToken = default);
 }

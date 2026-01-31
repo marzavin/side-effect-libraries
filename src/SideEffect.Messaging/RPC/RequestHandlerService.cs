@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SideEffect.Messaging.RPC;
 
-internal class RequestHandlerService<TRequest, TResponse, THandler> : IMessageHandlerService
+internal class RequestHandlerService<TRequest, TResponse, THandler>
     where TRequest : IRequest<TResponse>
     where TResponse : IResponse, new()
     where THandler : RequestHandlerBase<TRequest, TResponse>

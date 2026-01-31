@@ -4,12 +4,12 @@ using SideEffect.Messaging.RPC;
 namespace SideEffect.Messaging;
 
 /// <summary>
-/// 
+/// An interface of client for sending messages to the messaging hub.
 /// </summary>
 public interface IMessageHubClient
 {
     /// <summary>
-    /// Publishes Pub/Sub event.
+    /// Publishes Publish/Subscribe event.
     /// </summary>
     /// <typeparam name="TEvent">Type of event message.</typeparam>
     /// <param name="message">See <see cref="IEvent"/> for more information.</param>
