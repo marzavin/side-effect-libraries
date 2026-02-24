@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Demo/">
+    <Project Path="demo/SideEffect.AppHost/SideEffect.AppHost.csproj" />
+    <Project Path="demo/SideEffect.Demo.Common/SideEffect.Demo.Common.csproj" />
+    <Project Path="demo/SideEffect.Demo.Web/SideEffect.Demo.Web.csproj" />
+    <Project Path="demo/SideEffect.Demo.Worker/SideEffect.Demo.Worker.csproj" />
+    <Project Path="demo/SideEffect.ServiceDefaults/SideEffect.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/SideEffect.Extensions.Tests/SideEffect.Extensions.Tests.csproj" />
+  </Folder>
+  <Project Path="src/SideEffect.DataTransfer/SideEffect.DataTransfer.csproj" />
+  <Project Path="src/SideEffect.Extensions/SideEffect.Extensions.csproj" />
+  <Project Path="src/SideEffect.Files/SideEffect.Files.csproj" />
+  <Project Path="src/SideEffect.Messaging.RabbitMQ/SideEffect.Messaging.RabbitMQ.csproj" Id="84031fb0-0340-47dc-83e8-81805ae5c540" />
+  <Project Path="src/SideEffect.Messaging.Redis/SideEffect.Messaging.Redis.csproj" Id="b07b0ea1-01b2-4543-be78-f2e2cd75fe63" />
+  <Project Path="src/SideEffect.Messaging/SideEffect.Messaging.csproj" />
+</Solution>

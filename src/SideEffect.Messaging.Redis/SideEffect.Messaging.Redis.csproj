@@ -5,9 +5,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<LangVersion>latestmajor</LangVersion>
-		<Description>A general-purpose library with models for data transfer.</Description>
+		<Description>An implementation of interfaces for messaging from SideEffect.Messaging library based on Redis.</Description>
 		<Authors>Artsiom Marzavin</Authors>
-		<Title>SideEffect.DataTransfer</Title>
+		<Title>SideEffect.Messaging.Redis</Title>
 		<RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -27,6 +27,15 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
+		<PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SideEffect.Messaging\SideEffect.Messaging.csproj" />
 	</ItemGroup>
 
 </Project>
