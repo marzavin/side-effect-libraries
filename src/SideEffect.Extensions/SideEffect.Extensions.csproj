@@ -12,11 +12,11 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageIcon>icon.svg</PackageIcon>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\icon.svg">
+		<None Include="..\..\icon.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
