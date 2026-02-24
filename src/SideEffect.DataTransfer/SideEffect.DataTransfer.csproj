@@ -5,9 +5,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <LangVersion>latestmajor</LangVersion>
-        <Description>A general-purpose library for manipulating files in various formats.</Description>
+        <Description>A general-purpose library with models for data transfer.</Description>
         <Authors>Artsiom Marzavin</Authors>
-        <Title>SideEffect.Files</Title>
+        <Title>SideEffect.DataTransfer</Title>
         <RepositoryUrl>https://github.com/marzavin/side-effect-libraries</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

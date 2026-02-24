@@ -1,32 +1,77 @@
 name: "Publish to NuGet"
 
-on: 
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+on:
+    push:
+        tags:
+            - "[0-9]+.[0-9]+.[0-9]+"
 
 env:
-  PROJECT_PATH: "src/SideEffect.Files/SideEffect.Files.csproj"
-  PACKAGE_OUTPUT: ${{ github.workspace }}/output
-  NUGET_URL: "https://api.nuget.org/v3/index.json"
+    FILES_PROJECT_PATH: "src/SideEffect.Files/SideEffect.Files.csproj"
+    MESSAGING_PROJECT_PATH: "src/SideEffect.Messaging/SideEffect.Messaging.csproj"
+    MESSAGING_RABBITMQ_PROJECT_PATH: "src/SideEffect.Messaging.RabbitMQ/SideEffect.Messaging.RabbitMQ.csproj"
+    DATA_TRANSFER_PROJECT_PATH: "src/SideEffect.DataTransfer/SideEffect.DataTransfer.csproj"
+    EXTENSIONS_PROJECT_PATH: "src/SideEffect.Extensions/SideEffect.Extensions.csproj"
+    EXTENSIONS_TESTS_PROJECT_PATH: "tests/SideEffect.Extensions.Tests/SideEffect.Extensions.Tests.csproj"
+    PACKAGE_OUTPUT: ${{ github.workspace }}/output
+    NUGET_URL: "https://api.nuget.org/v3/index.json"
 
 jobs:
-  publish:
-    runs-on: "ubuntu-latest"   
-    steps:   
-    - name: "Checkout"
-      uses: actions/checkout@v2
-    - name: "Install .NET"
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: "8.0.x"
-    - name: "Restore packages"
-      run: dotnet restore ${{ env.PROJECT_PATH }}   
-    - name: "Build projects"
-      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release  
-    - name: "Get version"
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-    - name: "Pack projects"
-      run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
-    - name: "Push packages"
-      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT }}/*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_URL }} --no-symbols --skip-duplicate
+    publish:
+        runs-on: "ubuntu-latest"
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v2
+            - name: "Install .NET"
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: "8.0.x"
+
+            - name: "Restore packages for DataTransfer project"
+              run: dotnet restore ${{ env.DATA_TRANSFER_PROJECT_PATH }}
+            - name: "Restore packages for Extensions project"
+              run: dotnet restore ${{ env.EXTENSIONS_PROJECT_PATH }}
+            - name: "Restore packages for Files project"
+              run: dotnet restore ${{ env.FILES_PROJECT_PATH }}
+            - name: "Restore packages for Messaging project"
+              run: dotnet restore ${{ env.MESSAGING_PROJECT_PATH }}
+            - name: "Restore packages for Messaging project (RabbitMQ)"
+              run: dotnet restore ${{ env.MESSAGING_RABBITMQ_PROJECT_PATH }}
+
+            - name: "Build DataTransfer project"
+              run: dotnet build ${{ env.DATA_TRANSFER_PROJECT_PATH }} --no-restore --configuration Release
+            - name: "Build Extensions project"
+              run: dotnet build ${{ env.EXTENSIONS_PROJECT_PATH }} --no-restore --configuration Release
+            - name: "Build Files project"
+              run: dotnet build ${{ env.FILES_PROJECT_PATH }} --no-restore --configuration Release
+            - name: "Build Messaging project"
+              run: dotnet build ${{ env.MESSAGING_PROJECT_PATH }} --no-restore --configuration Release
+            - name: "Build Messaging project (RabbitMQ)"
+              run: dotnet build ${{ env.MESSAGING_RABBITMQ_PROJECT_PATH }} --no-restore --configuration Release
+
+            - name: "Restore packages for projects with tests"
+              run: dotnet restore ${{ env.EXTENSIONS_TESTS_PROJECT_PATH }}
+            - name: "Build projects with tests"
+              run: dotnet build ${{ env.EXTENSIONS_TESTS_PROJECT_PATH }} --no-restore --configuration Release
+            - name: Run tests for Extensions project
+              run: dotnet test ${{ env.EXTENSIONS_TESTS_PROJECT_PATH }} --configuration Release --no-build --logger "trx;LogFileName=SideEffect.Extensions.Tests.trx"
+            - name: Upload test results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: TestResults
+                  path: ./tests/SideEffect.Extensions.Tests/TestResults/SideEffect.Extensions.Tests.trx
+
+            - name: "Get version"
+              run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+            - name: "Pack DataTransfer project"
+              run: dotnet pack ${{ env.DATA_TRANSFER_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+            - name: "Pack Extensions project"
+              run: dotnet pack ${{ env.EXTENSIONS_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+            - name: "Pack Files project"
+              run: dotnet pack ${{ env.FILES_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+            - name: "Pack Messaging project"
+              run: dotnet pack ${{ env.MESSAGING_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+            - name: "Pack Messaging project (RabbitMQ)"
+              run: dotnet pack ${{ env.MESSAGING_RABBITMQ_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+            - name: "Push packages"
+              run: dotnet nuget push ${{ env.PACKAGE_OUTPUT }}/*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_URL }} --no-symbols --skip-duplicate
