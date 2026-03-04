@@ -8,6 +8,7 @@
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="tests/SideEffect.Extensions.Tests/SideEffect.Extensions.Tests.csproj" />
+    <Project Path="tests/SideEffect.Files.Tests/SideEffect.Files.Tests.csproj" Id="c2b319ce-bb47-4eab-b98c-a92a47cbdf09" />
   </Folder>
   <Project Path="src/SideEffect.DataTransfer/SideEffect.DataTransfer.csproj" />
   <Project Path="src/SideEffect.Extensions/SideEffect.Extensions.csproj" />
