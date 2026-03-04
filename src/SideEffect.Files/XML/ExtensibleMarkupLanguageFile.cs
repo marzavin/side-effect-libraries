@@ -15,15 +15,9 @@ public abstract class ExtensibleMarkupLanguageFile<TData> : FileFormatBase<TData
     /// <inheritdoc />
     protected override async Task<TData> LoadContentFromStreamAsync(byte[] content, CancellationToken cancellationToken = default)
     {
-        using var stream = new MemoryStream(content);
-        using var reader = new StreamReader(stream);
-
-        var xmlString = await reader.ReadToEndAsync(cancellationToken);
-
-        reader.Close();
-        stream.Close();
-
-        var xmlDocument = XDocument.Parse(xmlString.Trim());
+        using var memoryStream = new MemoryStream(XmlHelper.Minify(content));
+        
+        var xmlDocument = XDocument.Load(memoryStream);
 
         return await ParseFileContentAsync(xmlDocument, cancellationToken);
     }
