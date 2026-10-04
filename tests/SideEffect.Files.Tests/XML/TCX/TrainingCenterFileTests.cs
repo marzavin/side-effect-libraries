@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using SideEffect.Files.XML.TCX;
 using System.Xml;
 using System.Xml.Linq;
@@ -24,7 +24,7 @@ public class TrainingCenterFileTests
         var schema = new XmlSchemaSet();
         schema.Add("http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2", xsdPath);
         var rd = XmlReader.Create(xmlPath);
-        XDocument doc = XDocument.Load(rd);
+        var doc = XDocument.Load(rd);
         try
         {
             doc.Validate(schema, ValidationEventHandler);
