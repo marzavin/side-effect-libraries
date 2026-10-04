@@ -68,6 +68,12 @@ jobs:
             - name: "Get version"
               run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
+            - name: NuGet login (OIDC → temp API key)
+              uses: NuGet/login@v1
+              id: login
+              with:
+                  user: ${{ secrets.NUGET_USER }}
+
             - name: "Pack Data project"
               run: dotnet pack ${{ env.DATA_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
             - name: "Pack DataTransfer project"
@@ -80,5 +86,6 @@ jobs:
               run: dotnet pack ${{ env.MESSAGING_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
             - name: "Pack Messaging project (RabbitMQ)"
               run: dotnet pack ${{ env.MESSAGING_RABBITMQ_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
+
             - name: "Push packages"
-              run: dotnet nuget push ${{ env.PACKAGE_OUTPUT }}/*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_URL }} --no-symbols --skip-duplicate
+              run: dotnet nuget push ${{ env.PACKAGE_OUTPUT }}/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source ${{ env.NUGET_URL }} --no-symbols --skip-duplicate
