@@ -6,6 +6,7 @@ on:
             - "[0-9]+.[0-9]+.[0-9]+"
 
 env:
+    DATA_PROJECT_PATH: "src/SideEffect.Data/SideEffect.Data.csproj"
     FILES_PROJECT_PATH: "src/SideEffect.Files/SideEffect.Files.csproj"
     MESSAGING_PROJECT_PATH: "src/SideEffect.Messaging/SideEffect.Messaging.csproj"
     MESSAGING_RABBITMQ_PROJECT_PATH: "src/SideEffect.Messaging.RabbitMQ/SideEffect.Messaging.RabbitMQ.csproj"
@@ -26,6 +27,8 @@ jobs:
               with:
                   dotnet-version: "8.0.x"
 
+            - name: "Restore packages for Data project"
+              run: dotnet restore ${{ env.DATA_PROJECT_PATH }}
             - name: "Restore packages for DataTransfer project"
               run: dotnet restore ${{ env.DATA_TRANSFER_PROJECT_PATH }}
             - name: "Restore packages for Extensions project"
@@ -37,6 +40,8 @@ jobs:
             - name: "Restore packages for Messaging project (RabbitMQ)"
               run: dotnet restore ${{ env.MESSAGING_RABBITMQ_PROJECT_PATH }}
 
+            - name: "Build Data project"
+              run: dotnet build ${{ env.DATA_PROJECT_PATH }} --no-restore --configuration Release
             - name: "Build DataTransfer project"
               run: dotnet build ${{ env.DATA_TRANSFER_PROJECT_PATH }} --no-restore --configuration Release
             - name: "Build Extensions project"
@@ -63,6 +68,8 @@ jobs:
             - name: "Get version"
               run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
+            - name: "Pack Data project"
+              run: dotnet pack ${{ env.DATA_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
             - name: "Pack DataTransfer project"
               run: dotnet pack ${{ env.DATA_TRANSFER_PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.RELEASE_VERSION }} --output ${{ env.PACKAGE_OUTPUT }}
             - name: "Pack Extensions project"

@@ -10,6 +10,7 @@
     <Project Path="tests/SideEffect.Extensions.Tests/SideEffect.Extensions.Tests.csproj" />
     <Project Path="tests/SideEffect.Files.Tests/SideEffect.Files.Tests.csproj" Id="c2b319ce-bb47-4eab-b98c-a92a47cbdf09" />
   </Folder>
+  <Project Path="src/SideEffect.Data/SideEffect.Data.csproj" Id="4e3aa5a6-f9a0-4790-a63c-0224ac6c4f2d" />
   <Project Path="src/SideEffect.DataTransfer/SideEffect.DataTransfer.csproj" />
   <Project Path="src/SideEffect.Extensions/SideEffect.Extensions.csproj" />
   <Project Path="src/SideEffect.Files/SideEffect.Files.csproj" />
